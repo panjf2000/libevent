@@ -333,6 +333,25 @@ void event_enable_debug_mode(void);
 EVENT2_EXPORT_SYMBOL
 void event_debug_unassign(struct event *);
 
+EVENT2_EXPORT_SYMBOL
+extern const int event_tcp_keepalive_timeout_;
+
+#ifndef EVENT__DISABLE_TCP_KEEPALIVE
+/* Global internal flag: set to one if we should enable TCP keepalive on
+ * newly created sockets. */
+#define EVENT_TCP_KEEPALIVE_IS_ON() (1)
+#else
+#define EVENT_TCP_KEEPALIVE_IS_ON() (0)
+#endif
+
+/**
+ * Return the TCP keepalive timeout value.
+ *
+ * @see event_tcp_keepalive_timeout()
+ */
+EVENT2_EXPORT_SYMBOL
+int event_tcp_keepalive_timeout(void);
+
 /**
  * Create and return a new event_base to use with the rest of Libevent.
  *

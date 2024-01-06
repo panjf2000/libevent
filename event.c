@@ -211,6 +211,25 @@ eq_debug_entry(const struct event_debug_entry *a,
 
 int event_debug_mode_on_ = 0;
 
+const int event_tcp_keepalive_timeout_ = 300;
+
+int
+event_tcp_keepalive_timeout(void)
+{
+#ifdef EVENT__TCP_KEEPALIVE_TIMEOUT
+	const char* timeout_str = EVENT__TCP_KEEPALIVE_TIMEOUT;
+	char* end_ptr;
+	errno = 0;
+	long int timeout = strtol(timeout_str, &end_ptr, 10);
+	if (end_ptr == timeout_str || errno == ERANGE || timeout > INT_MAX || timeout <= 0) {
+		event_errx(1, "%s: invalid TCP keepalive timeout: %s", __func__, timeout_str);
+		return -1;
+    }
+	return (int)timeout;
+#else
+	return event_tcp_keepalive_timeout_; /* default TCP keepalive timeout is 5 minutes */
+#endif
+}
 
 #if !defined(EVENT__DISABLE_THREAD_SUPPORT) && !defined(EVENT__DISABLE_DEBUG_MODE)
 /**

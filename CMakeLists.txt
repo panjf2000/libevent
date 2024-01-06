@@ -141,6 +141,12 @@ option(EVENT__DISABLE_MM_REPLACEMENT
 option(EVENT__DISABLE_THREAD_SUPPORT
     "Define if libevent should not be compiled with thread support" OFF)
 
+option(EVENT__DISABLE_TCP_KEEPALIVE
+    "Define if libevent should not enable the TCP keepalive mechanism" OFF)
+
+set(EVENT__TCP_KEEPALIVE_TIMEOUT 300 CACHE STRING
+	"Define the timeout for TCP KeepAlive")
+
 set(EVENT__DISABLE_OPENSSL AUTO CACHE STRING
     "OpenSSL library support: AUTO (use if present), ON (ignore), OFF (require presence)")
 set_property(CACHE EVENT__DISABLE_OPENSSL PROPERTY STRINGS AUTO ON OFF)

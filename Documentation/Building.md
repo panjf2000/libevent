@@ -203,6 +203,12 @@ EVENT__FORCE_KQUEUE_CHECK:BOOL=OFF
 
 # Build documentation with doxygen
 EVENT__DOXYGEN:BOOL=OFF
+
+# Define if Libevent should not be compiled with thread support
+EVENT__DISABLE_TCP_KEEPALIVE:BOOL=OFF
+
+# Define the timeout for TCP KeepAlive
+EVENT__TCP_KEEPALIVE_TIMEOUT:STRING=300
 ```
 MSVC specific options:
 ```sh

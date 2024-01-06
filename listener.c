@@ -241,8 +241,10 @@ evconnlistener_new_bind(struct event_base *base, evconnlistener_cb cb,
 		support_keepalive = 0;
 	}
 #endif
-	if (support_keepalive) {
-		/* TODO(panjf2000): make this TCP keep-alive value configurable */
+	if (EVENT_TCP_KEEPALIVE_IS_ON() && support_keepalive) {
+		int timeout = event_tcp_keepalive_timeout();
+		if (timeout <= 0)
+			timeout = event_tcp_keepalive_timeout_;
 		if (evutil_set_tcp_keepalive(fd, 1, 300) < 0)
 			goto err;
 	}
